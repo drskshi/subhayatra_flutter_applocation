@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "305385359708",
+    "firebase_url": "https://suvhayatra-001-default-rtdb.firebaseio.com",
+    "project_id": "suvhayatra-001",
+    "storage_bucket": "suvhayatra-001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305385359708:android:d8a65cd298b4d05a799999",
+        "android_client_info": {
+          "package_name": "com.example.subhayatra"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQjGCAkBlGkBNDYKLaM3bi929RjHrTIoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
