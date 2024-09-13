@@ -20,29 +20,26 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isObscurePassword = false;
   final _formKey = GlobalKey<FormState>();
 
-    // vaildate all the form of the below
-   void _submit() async {
-  if (_formKey.currentState!.validate()) {
-      await  firebaseAuth.createUserWithEmailAndPassword(
-        email: emailTextEditingController.text.trim()     , 
-      password: passwordTextEditingController.text.trim()
-      ).then((auth) async {
-        currentUser =auth.user;
-        
+  // vaildate all the form of the below
+  void _submit() async {
+    if (_formKey.currentState!.validate()) {
+      await firebaseAuth
+          .createUserWithEmailAndPassword(
+              email: emailTextEditingController.text.trim(),
+              password: passwordTextEditingController.text.trim())
+          .then((auth) async {
+        currentUser = auth.user;
+
         await Fluttertoast.showToast(msg: "Logged in");
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> HomeScreen()));
-
-      }).catchError((errorMessage){
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => HomeScreen()));
+      }).catchError((errorMessage) {
         Fluttertoast.showToast(msg: "Something went wrong! Try Again");
-      }
-      
-      );
+      });
+    } else {
+      Fluttertoast.showToast(msg: "Enter your email and password");
     }
-     else{
-        Fluttertoast.showToast(msg: "Enter your email and password");
-      }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     )),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: (text) {
-                                  
-                                },
+                                validator: (text) {},
                                 onChanged: (text) => setState(() {
                                       emailTextEditingController.text = text;
                                     })),
@@ -176,8 +171,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     return "Please enter a password";
                                   }
 
-                                  
-
                                   return null;
                                 },
                                 onChanged: (text) => setState(() {
@@ -186,11 +179,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(height: 20),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: darkTheme
+                                foregroundColor:
+                                    darkTheme ? Colors.black : Colors.white,
+                                backgroundColor: darkTheme
                                     ? Colors.amber.shade800
                                     : Colors.blue,
-                                onPrimary:
-                                    darkTheme ? Colors.black : Colors.white,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
@@ -224,7 +217,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 GestureDetector(
                                   onTap: () {
                                     // Add your sign-in logic here
-                                    Navigator.pushReplacementNamed(context, '/register');
+                                    Navigator.pushReplacementNamed(
+                                        context, '/register');
                                   },
                                   child: Text(
                                     ' Sign Up',

@@ -8,7 +8,6 @@ import 'package:subhayatra/global/global.dart';
 // import 'package:subhayatra/screens/home_page.dart';
 import 'package:subhayatra/screens/login_screen.dart';
 
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -23,43 +22,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final adressTextEditingCOntoller = TextEditingController();
   final passwordTextEditingController = TextEditingController();
   final confirmpasswordTextEditingController = TextEditingController();
-  bool isObscurePassword =false;
+  bool isObscurePassword = false;
   bool isObscureConfirmPassword = false; // for hiding the password text in UI
 
   final _formKey = GlobalKey<FormState>();
 
   void _submit() async {
-    // vaildate all the form of the below 
+    // vaildate all the form of the below
     if (_formKey.currentState!.validate()) {
-      await  firebaseAuth.createUserWithEmailAndPassword(
-        email: emailTextEditingController.text.trim()     , 
-      password: passwordTextEditingController.text.trim()
-      ).then((auth) async {
-        currentUser =auth.user;
-        if (currentUser !=null){
+      await firebaseAuth
+          .createUserWithEmailAndPassword(
+              email: emailTextEditingController.text.trim(),
+              password: passwordTextEditingController.text.trim())
+          .then((auth) async {
+        currentUser = auth.user;
+        if (currentUser != null) {
           Map userMap = {
-            "id" :currentUser!.uid,
+            "id": currentUser!.uid,
             "name": nameTextEditingController.text.trim(),
-            "email":emailTextEditingController.text.trim(),
-            "address":adressTextEditingCOntoller.text.trim(),
-            "phone":phoneTextEditingController.text.trim(),
+            "email": emailTextEditingController.text.trim(),
+            "address": adressTextEditingCOntoller.text.trim(),
+            "phone": phoneTextEditingController.text.trim(),
           };
-          DatabaseReference userRef = FirebaseDatabase.instance.ref().child("users");
+          DatabaseReference userRef =
+              FirebaseDatabase.instance.ref().child("users");
           userRef.child(currentUser!.uid).set(userMap);
         }
         await Fluttertoast.showToast(msg: "RegistrationSuccess");
         // ignore: use_build_context_synchronously
-        Navigator.push(context, MaterialPageRoute(builder: (c) => const LoginScreen()));
-
-      }).catchError((errorMessage){
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => const LoginScreen()));
+      }).catchError((errorMessage) {
         Fluttertoast.showToast(msg: "Something went wrong! Try Again");
-      }
-      
-      );
+      });
+    } else {
+      Fluttertoast.showToast(msg: "Not all field are vaild");
     }
-     else{
-        Fluttertoast.showToast(msg: "Not all field are vaild");
-      }
   }
 
   @override
@@ -448,11 +446,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(height: 20),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: darkTheme
+                                foregroundColor:
+                                    darkTheme ? Colors.black : Colors.white,
+                                backgroundColor: darkTheme
                                     ? Colors.amber.shade800
                                     : Colors.blue,
-                                onPrimary:
-                                    darkTheme ? Colors.black : Colors.white,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
@@ -478,7 +476,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 Text(
                                   'Already have an account?',
                                   style: TextStyle(
-                                    
                                     color: darkTheme
                                         ? Colors.amber.shade900
                                         : const Color.fromARGB(255, 0, 0, 0),
